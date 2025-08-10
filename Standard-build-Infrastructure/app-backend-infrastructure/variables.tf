@@ -37,3 +37,12 @@ variable "vm-size" {
 variable "vm-name" {
   type = string
 }
+variable "keyvaultname" {
+    type = string
+}
+variable "tenant_id" {
+    type = string
+}
+variable "spobject_id" {
+    type = string
+}

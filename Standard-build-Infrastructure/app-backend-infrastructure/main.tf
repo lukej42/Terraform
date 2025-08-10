@@ -42,3 +42,12 @@ module "azurerm_windows_virtual_machine" {
   subnet_id            = module.azurerm_virtual_network.subnet_id
   network_interface_id = module.azurerm_virtual_network.network_interface_id
 }
+
+module "azurerm_key_vault" {
+  source = "./modules/security"
+  keyvaultname                = var.keyvaultname
+  location                    = var.location
+  resource_group_name         = var.resource_group_name
+  tenant_id                   = var.tenant_id
+  spobject_id                 = var.spobject_id
+}

@@ -1,4 +1,6 @@
-subscription = "<subscription ID>"
+subscription = "525c7c1f-f5e9-4bf4-8d7a-5b7a06889a12"
+tenant_id = "b38a3c51-d056-4b51-90d0-6027238fb894"
+spobject_id = "783717c6-5d2d-47b9-95c6-8eac0868d57f"
 storage_account_name     = "devstorageacct1992"
 location                 = "uksouth"
 resource_group_name      = "terraform-dev"
@@ -11,3 +13,4 @@ subnet_prefix = ["10.0.2.0/24"]
 networkinterface_name = "dev_ni"
 vm-name = "dev-vm"
 vm-size = "Standard_B1s"
+keyvaultname = "kv-devsecrets1992"
