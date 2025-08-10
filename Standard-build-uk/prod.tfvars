@@ -1,0 +1,8 @@
+subscription = "525c7c1f-f5e9-4bf4-8d7a-5b7a06889a12"
+storagename = "stsubscriptionhubprod"
+appserviceplanname = "asp-prod"
+webappname = "hm-webapp-prod"
+ostype = "Linux"
+sku = "F1"
+resource_group_name = "terraform-prod"
+location            = "uksouth"

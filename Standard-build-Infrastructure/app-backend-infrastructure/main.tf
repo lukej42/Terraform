@@ -1,0 +1,44 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">= 3.75.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  features {
+  }
+  subscription_id = var.subscription
+  } 
+
+module "storage_account" {
+  source               = "./modules/storage"
+  storage_account_name = var.storage_account_name
+  location             = var.location
+  resource_group_name  = var.resource_group_name
+  account_tier         = var.account_tier
+  account_replication_type = var.account_replication_type
+}
+module "azurerm_virtual_network" {
+  source               = "./modules/network"
+  virtual_network_name = var.virtual_network_name
+  networkinterface_name = var.networkinterface_name
+  address_space        = var.address_space
+  resource_group_name  = var.resource_group_name
+  subnet_name          = var.subnet_name
+  subnet_prefix        = var.subnet_prefix
+  subscription         = var.subscription
+  location             = var.location
+}
+module "azurerm_windows_virtual_machine" {
+  source               = "./modules/compute"
+  vm-name              = var.vm-name
+  vm-size              = var.vm-size
+  resource_group_name  = var.resource_group_name
+  subscription         = var.subscription
+  location             = var.location
+  subnet_id            = module.azurerm_virtual_network.subnet_id
+  network_interface_id = module.azurerm_virtual_network.network_interface_id
+}
