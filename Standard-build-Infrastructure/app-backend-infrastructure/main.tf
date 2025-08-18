@@ -31,7 +31,20 @@ module "azurerm_virtual_network" {
   subnet_prefix        = var.subnet_prefix
   subscription         = var.subscription
   location             = var.location
+  nsgname              = var.nsgname
 }
+#module "azurerm_network_security_group" {
+#  source = "./modules/network"
+#  nsgname                    = var.nsgname
+#  location                   = var.location
+#  resource_group_name        = var.resource_group_name
+#  networkinterface_name      = var.networkinterface_name
+#  address_space              = var.address_space
+#  subnet_name                = var.subnet_name
+#  virtual_network_name       = var.virtual_network_name
+#  subnet_prefix              = var.subnet_prefix
+#  subscription               = var.subscription
+#}
 module "azurerm_windows_virtual_machine" {
   source               = "./modules/compute"
   vm-name              = var.vm-name
@@ -51,3 +64,4 @@ module "azurerm_key_vault" {
   tenant_id                   = var.tenant_id
   spobject_id                 = var.spobject_id
 }
+

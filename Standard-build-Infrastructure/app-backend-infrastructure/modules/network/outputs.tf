@@ -4,3 +4,6 @@ output "network_interface_id" {
 output "subnet_id" {
   value = azurerm_subnet.network.id
 }
+output "nic_name" {
+  value = var.networkinterface_name
+}

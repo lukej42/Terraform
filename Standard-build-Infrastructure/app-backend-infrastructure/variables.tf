@@ -46,3 +46,6 @@ variable "tenant_id" {
 variable "spobject_id" {
     type = string
 }
+variable "nsgname" {
+
+}

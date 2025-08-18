@@ -22,3 +22,6 @@ variable "networkinterface_name" {
 variable "subnet_prefix" {
     type = list(string)
 }
+variable "nsgname" {
+
+}
