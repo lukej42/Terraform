@@ -3,8 +3,8 @@ resource "azurerm_windows_virtual_machine" "vm" {
   resource_group_name = var.resource_group_name
   location            = var.location
   size                = var.vm-size
-  admin_username      = "Luke"
-  admin_password      = "Minoandruby42!!!"
+  admin_username      = "username"
+  admin_password      = "password"
   network_interface_ids = [var.network_interface_id]
 
   os_disk {
