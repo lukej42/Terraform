@@ -62,3 +62,12 @@ module "azurerm_windows_virtual_machine" {
   #subnet_id            = module.azurerm_virtual_network1.subnet_id
   network_interface_id = module.azurerm_network_interface.network_interface_id
 }
+module "azurerm_windows_virtual_machine1" {
+  source               = "./modules/compute"
+  vm-name               = var.vm-name1
+  vm-size              = var.vm-size
+  resource_group_name  = var.resource_group_name
+  location             = var.location
+  #subnet_id            = module.azurerm_virtual_network1.subnet_id
+  network_interface_id = module.azurerm_network_interface1.network_interface_id
+}

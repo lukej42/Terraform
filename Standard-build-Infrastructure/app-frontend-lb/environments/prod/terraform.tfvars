@@ -10,5 +10,6 @@ subnet_prefix = ["10.0.2.0/24"]
 networkinterface_name = "prod_ni1"
 networkinterface_name1 = "prod_ni2"
 vm-name = "dev-vm1"
+vm-name1 = "prod-vm2"
 vm-size = "Standard_B1s"
 nsgname = "prod-nsg"

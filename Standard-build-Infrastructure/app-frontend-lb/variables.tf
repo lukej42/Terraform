@@ -37,3 +37,6 @@ variable "networkinterface_name" {
 variable "networkinterface_name1" {
     type = string
 }
+variable "vm-name1" {
+    type = string
+}
