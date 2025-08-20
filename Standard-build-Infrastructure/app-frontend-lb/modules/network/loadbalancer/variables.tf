@@ -6,7 +6,11 @@ variable "resource_group_name" {
 }
 variable "publicipname" {
     type = string
+    default = null
 }
 variable "lbname" {
     type = string
+}
+variable "nic_ids" {
+  type = list(string)
 }
