@@ -1,45 +1,39 @@
 trigger:
-- dev
-- stage
-- main   # treat main as prod
+- main  # Or dev/stage as needed
 
 pool:
   vmImage: 'ubuntu-latest'
 
 variables:
   terraformVersion: "3.75.0"
-
-  # Path to your Terraform project
   workingDirectory: "$(System.DefaultWorkingDirectory)/Terraform/app-backend-infrastructure"
 
-  # Backend variables (set these in variable group or pipeline UI)
   backend_rg: "terraform-deploy"
   backend_sa: "terraformsflg"
   backend_container: "app-backend-infrastructure"
   backend_key: "terraform.tfstate"
 
-  # Map branches to environments
-  environment: $[
-    eq(variables['Build.SourceBranchName'], 'dev') ? 'dev' :
-    eq(variables['Build.SourceBranchName'], 'stage') ? 'stage' :
-    eq(variables['Build.SourceBranchName'], 'main') ? 'prod' : 'dev'
-  ]
+  # Environment to deploy
+  environment: "dev"
 
 steps:
 
-# Install Terraform
-- task: TerraformInstaller@1
+# Install Terraform manually
+- bash: |
+    echo "Installing Terraform version $(terraformVersion)..."
+    wget https://releases.hashicorp.com/terraform/${terraformVersion}/terraform_${terraformVersion}_linux_amd64.zip
+    unzip terraform_${terraformVersion}_linux_amd64.zip
+    sudo mv terraform /usr/local/bin/
+    terraform -version
   displayName: "Install Terraform"
-  inputs:
-    terraformVersion: $(terraformVersion)
 
 # Azure Login
 - task: AzureCLI@2
   displayName: "Azure Login"
   inputs:
-    azureSubscription: "<YOUR-AZURE-SERVICE-CONNECTION>"
-    scriptType: bash
-    scriptLocation: inlineScript
+    azureSubscription: 'Azure subscription 1(1)(525c7c1f-f5e9-4bf4-8d7a-5b7a06889a12)'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
     inlineScript: |
       echo "Logged into Azure"
       az account show
@@ -61,10 +55,10 @@ steps:
     terraform validate
   displayName: "Terraform Validate"
 
-# Terraform Plan with environment-specific tfvars
+# Terraform Plan
 - bash: |
     cd "$(workingDirectory)"
-    echo "Deploying environment: $(environment) (branch: $(Build.SourceBranchName))"
+    echo "Deploying environment: $(environment)"
     terraform plan \
       -input=false \
       -var-file="environments/$(environment)/terraform.tfvars" \
@@ -78,13 +72,8 @@ steps:
     PathtoPublish: "$(workingDirectory)/plan.tfplan"
     ArtifactName: "tfplan"
 
-# Terraform Apply (only on the branch being deployed)
+# Terraform Apply
 - bash: |
     cd "$(workingDirectory)"
     terraform apply -input=false -auto-approve plan.tfplan
   displayName: "Terraform Apply"
-  condition: and(succeeded(), or(
-      eq(variables['Build.SourceBranchName'], 'dev'),
-      eq(variables['Build.SourceBranchName'], 'stage'),
-      eq(variables['Build.SourceBranchName'], 'main')
-    ))
