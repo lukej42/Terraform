@@ -5,7 +5,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  terraformVersion: "3.75.0"
+  terraformVersion: "1.5.9"
   workingDirectory: "$(System.DefaultWorkingDirectory)/Terraform/app-backend-infrastructure"
 
   backend_rg: "terraform-deploy"
