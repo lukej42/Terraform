@@ -1,19 +1,23 @@
 trigger:
-- main  # Or dev/stage as needed
+- main  # Change to dev/stage/main as needed
 
 pool:
   vmImage: 'ubuntu-latest'
 
 variables:
+  # Specify a valid Terraform version
   terraformVersion: "1.9.5"
-  workingDirectory: "$(System.DefaultWorkingDirectory)/Terraform/app-backend-infrastructure"
 
+  # Repo structure
+  workingDirectory: "$(System.DefaultWorkingDirectory)/Terraform/Standard-build-Infrastructure/app-backend-infrastructure"
+
+  # Backend config
   backend_rg: "terraform-deploy"
   backend_sa: "terraformsflg"
   backend_container: "app-backend-infrastructure"
   backend_key: "terraform.tfstate"
 
-  # Environment to deploy
+  # Environment to deploy: dev, stage, prod
   environment: "dev"
 
 steps:
@@ -61,7 +65,7 @@ steps:
     echo "Deploying environment: $(environment)"
     terraform plan \
       -input=false \
-      -var-file="Standard-build-Infrastructure/app-backend-infrastructure/environments/$(environment)/terraform.tfvars" \
+      -var-file="environments/$(environment)/terraform.tfvars" \
       -out=plan.tfplan
   displayName: "Terraform Plan"
 
