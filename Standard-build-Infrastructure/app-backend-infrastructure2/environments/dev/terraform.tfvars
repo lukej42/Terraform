@@ -1,0 +1,17 @@
+subscription = "<subscription id>"
+tenant_id = "<tenant id>"
+spobject_id = "<spobject id>"
+storage_account_name     = "devstorageacct1992"
+location                 = "uksouth"
+resource_group_name      = "terraform-dev"
+account_tier             = "Standard"
+account_replication_type = "LRS"
+virtual_network_name = "dev_vn"
+address_space = ["10.0.0.0/16"]
+subnet_name = "dev-subnet"
+subnet_prefix = ["10.0.2.0/24"]
+networkinterface_name = "dev_ni"
+vm-name = "dev-vm"
+vm-size = "Standard_B1s"
+keyvaultname = "kv-devsecrets1992"
+nsgname = "dev_nsg"

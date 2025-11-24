@@ -1,0 +1,17 @@
+subscription = "<subscription id>"
+tenant_id = "<tenant id>"
+spobject_id = "<spobject id>"
+storage_account_name     = "prodstorageacct1992"
+location                 = "uksouth"
+resource_group_name      = "terraform-prod"
+account_tier             = "Standard"
+account_replication_type = "LRS"
+virtual_network_name = "prod_vn"
+address_space = ["10.0.0.0/16"]
+subnet_name = "prod-subnet"
+subnet_prefix = ["10.0.2.0/24"]
+networkinterface_name = "prod_ni"
+vm-name = "prod-vm"
+vm-size = "Standard_B1s"
+keyvaultname = "kv-prodsecrets1992"
+nsgname = "prod_nsg"
