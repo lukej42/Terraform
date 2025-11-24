@@ -61,11 +61,11 @@ steps:
 
 # Terraform Plan
 - bash: |
-    cd "$(workingDirectory)"
+    cd "$(System.DefaultWorkingDirectory)/Terraform/Standard-build-Infrastructure/app-backend-infrastructure"
     echo "Deploying environment: $(environment)"
     terraform plan \
       -input=false \
-      -var-file="Standard-build-Infrastructure/app-backend-infrastructure/environments/$(environment)/terraform.tfvars" \
+      -var-file="environments/$(environment)/terraform.tfvars"
       -out=plan.tfplan
   displayName: "Terraform Plan"
 
