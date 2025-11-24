@@ -9,7 +9,7 @@ variables:
   terraformVersion: "1.9.5"
 
   # Repo structure
-  workingDirectory: "$(System.DefaultWorkingDirectory)/Terraform/Standard-build-Infrastructure/app-backend-infrastructure"
+  workingDirectory: "$(System.DefaultWorkingDirectory)/Standard-build-Infrastructure/app-backend-infrastructure"
 
   # Backend config
   backend_rg: "terraform-deploy"
