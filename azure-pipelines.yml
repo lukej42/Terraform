@@ -61,7 +61,7 @@ steps:
     echo "Deploying environment: $(environment)"
     terraform plan \
       -input=false \
-      -var-file="environments/$(environment)/terraform.tfvars" \
+      -var-file="Standard-build-Infrastructure/app-backend-infrastructure/environments/$(environment)/terraform.tfvars" \
       -out=plan.tfplan
   displayName: "Terraform Plan"
 
