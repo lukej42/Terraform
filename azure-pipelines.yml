@@ -61,7 +61,7 @@ steps:
 
 # Terraform Plan
 - bash: |
-    cd "$(System.DefaultWorkingDirectory)/Terraform/Standard-build-Infrastructure/app-backend-infrastructure"
+    cd "$(System.DefaultWorkingDirectory)/Standard-build-Infrastructure/app-backend-infrastructure"
     echo "Current working directory is:"
     pwd
     echo "Deploying environment: $(environment)"
