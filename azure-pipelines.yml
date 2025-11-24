@@ -1,0 +1,90 @@
+trigger:
+- dev
+- stage
+- main   # treat main as prod
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  terraformVersion: "3.75.0"
+
+  # Path to your Terraform project
+  workingDirectory: "$(System.DefaultWorkingDirectory)/Terraform/app-backend-infrastructure"
+
+  # Backend variables (set these in variable group or pipeline UI)
+  backend_rg: "terraform-deploy"
+  backend_sa: "terraformsflg"
+  backend_container: "app-backend-infrastructure"
+  backend_key: "terraform.tfstate"
+
+  # Map branches to environments
+  environment: $[
+    eq(variables['Build.SourceBranchName'], 'dev') ? 'dev' :
+    eq(variables['Build.SourceBranchName'], 'stage') ? 'stage' :
+    eq(variables['Build.SourceBranchName'], 'main') ? 'prod' : 'dev'
+  ]
+
+steps:
+
+# Install Terraform
+- task: TerraformInstaller@1
+  displayName: "Install Terraform"
+  inputs:
+    terraformVersion: $(terraformVersion)
+
+# Azure Login
+- task: AzureCLI@2
+  displayName: "Azure Login"
+  inputs:
+    azureSubscription: "<YOUR-AZURE-SERVICE-CONNECTION>"
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      echo "Logged into Azure"
+      az account show
+
+# Terraform Init
+- bash: |
+    cd "$(workingDirectory)"
+    terraform init \
+      -input=false \
+      -backend-config="resource_group_name=$(backend_rg)" \
+      -backend-config="storage_account_name=$(backend_sa)" \
+      -backend-config="container_name=$(backend_container)" \
+      -backend-config="key=$(backend_key)"
+  displayName: "Terraform Init"
+
+# Terraform Validate
+- bash: |
+    cd "$(workingDirectory)"
+    terraform validate
+  displayName: "Terraform Validate"
+
+# Terraform Plan with environment-specific tfvars
+- bash: |
+    cd "$(workingDirectory)"
+    echo "Deploying environment: $(environment) (branch: $(Build.SourceBranchName))"
+    terraform plan \
+      -input=false \
+      -var-file="environments/$(environment)/terraform.tfvars" \
+      -out=plan.tfplan
+  displayName: "Terraform Plan"
+
+# Publish Plan
+- task: PublishBuildArtifacts@1
+  displayName: "Publish Terraform Plan"
+  inputs:
+    PathtoPublish: "$(workingDirectory)/plan.tfplan"
+    ArtifactName: "tfplan"
+
+# Terraform Apply (only on the branch being deployed)
+- bash: |
+    cd "$(workingDirectory)"
+    terraform apply -input=false -auto-approve plan.tfplan
+  displayName: "Terraform Apply"
+  condition: and(succeeded(), or(
+      eq(variables['Build.SourceBranchName'], 'dev'),
+      eq(variables['Build.SourceBranchName'], 'stage'),
+      eq(variables['Build.SourceBranchName'], 'main')
+    ))
