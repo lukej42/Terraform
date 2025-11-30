@@ -1,4 +1,10 @@
 terraform {
+    backend "azurerm" {
+    resource_group_name = "terraform-deploy"  # Replace with your resource group name
+    storage_account_name = "terraformsflg"  # Replace with your storage account name
+    container_name = "app-backend-infrastructure"  # Replace with your desired container name
+    key = "terraform.tfstate"  # Optional: Specify the filename within the container (defaults to 'terraform.tfstate')
+  }
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -6,6 +12,7 @@ terraform {
     }
   }
 }
+
 
 provider "azurerm" {
   features {
