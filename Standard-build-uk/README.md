@@ -49,3 +49,5 @@ All resources are created in a region and resource group defined via variables, 
 
 ```bash
 az login
+terraform plan
+terraform apply
