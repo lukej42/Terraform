@@ -30,7 +30,7 @@ module "network" {
   location             = var.location
   nsgname              = var.nsgname
   name_prefix          = var.name_prefix
-  networkinterface_name = var.networkinterface_name
+  #networkinterface_name = var.networkinterface_name
 }
 
 module "compute" {
