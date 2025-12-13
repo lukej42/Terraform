@@ -12,18 +12,6 @@ resource "azurerm_subnet" "network" {
   address_prefixes     = var.subnet_prefix
 }
 
-#resource "azurerm_network_interface" "network" {
-#  name                = var.networkinterface_name
-#  location            = var.location
-#  resource_group_name = var.resource_group_name
-#
-#  ip_configuration {
-#    name                          = "internal"
-#    subnet_id                     = azurerm_subnet.network.id
-#    private_ip_address_allocation = "Dynamic"
-#  }
-#}
-
 resource "azurerm_network_security_group" "nsg" {
   name                    = var.nsgname
   location                = var.location

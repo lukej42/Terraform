@@ -16,9 +16,7 @@ variable "address_space" {
 variable "subnet_name" {
 
 }
-#variable "networkinterface_name" {
-#    
-#}
+
 variable "subnet_prefix" {
     type = list(string)
 }
