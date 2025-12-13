@@ -1,0 +1,14 @@
+subscription = "<subcription id>"
+location                 = "uksouth"
+resource_group_name      = "terraform-dev"
+vmname = "dev-vm"
+vmsize = "Standard_B1s"
+vmusername = "<vm username>"
+vmpassword = "<vm password>"
+virtual_network_name = "dev_vn"
+address_space = ["10.0.0.0/16"]
+subnet_name = "dev-subnet"
+subnet_prefix = ["10.0.2.0/24"]
+networkinterface_name = "dev_ni"
+nsgname = "dev_nsg"
+name_prefix = "dev"
