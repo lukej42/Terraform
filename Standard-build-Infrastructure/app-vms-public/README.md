@@ -1,0 +1,1 @@
+This is a standard template to create an Application gateway with a minimum of two VMs.
