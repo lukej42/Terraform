@@ -38,7 +38,6 @@ variable "agcapacity" {
   type        = number
 }
 
-variable "vm_nic_ids" {
-  description = "List of VM NIC IDs to associate with backend pool"
-  type        = list(string)
+variable "backend_private_ips" {
+  type = list(string)
 }

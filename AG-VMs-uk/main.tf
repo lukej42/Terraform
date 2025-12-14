@@ -46,14 +46,19 @@ module "compute" {
 
 module "appgateway" {
   source              = "./modules/appgateway"
+
   agname              = var.agname
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  subnet_id           = module.network.appgw_subnet_id
-  public_ip_id        = module.network.public_ip_id
   agsku               = var.agsku
   agtier              = var.agtier
   agcapacity          = var.agcapacity
-  vm_nic_ids          = module.compute.vm_nic_ids
+
+  resource_group_name = var.resource_group_name
+  location            = var.location
+
+  subnet_id           = module.network.appgw_subnet_id
+  public_ip_id        = module.network.public_ip_id
+
+  backend_private_ips = module.compute.vm_private_ips
 }
+
 
