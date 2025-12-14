@@ -29,6 +29,9 @@ data "azuread_service_principal" "sp" {
   display_name = each.value
 }
 
+data "azuread_group" "storage_readers" {
+  display_name = "storage"
+}
 
 module "sp_reader" {
   for_each    = data.azuread_service_principal.sp
@@ -36,4 +39,11 @@ module "sp_reader" {
   principal_id = each.value.object_id
   scope        = data.azurerm_storage_account.statefile.id
   role         = var.sp_roles[each.key]
+}
+
+module "group_reader" {
+  source       = "./modules/role_assignment"
+  principal_id = data.azuread_group.storage_readers.object_id
+  scope        = data.azurerm_storage_account.statefile.id
+  role         = "Reader"
 }
