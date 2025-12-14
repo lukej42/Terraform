@@ -12,6 +12,13 @@ resource "azurerm_subnet" "network" {
   address_prefixes     = var.subnet_prefix
 }
 
+resource "azurerm_subnet" "appgateway" {
+  name                 = "appgw-subnet"
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.network.name
+  address_prefixes     = ["10.0.4.0/27"]
+}
+
 resource "azurerm_network_security_group" "nsg" {
   name                    = var.nsgname
   location                = var.location

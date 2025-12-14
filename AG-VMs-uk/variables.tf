@@ -38,5 +38,17 @@ variable "nsgname" {
   type = string
 }
 variable "name_prefix" {
-  type        = string
+  type = string
+}
+variable "agtier" {
+  type = string
+}
+variable "agcapacity" {
+  type = string
+}
+variable "agsku" {
+  type = string
+}
+variable "agname" {
+  type = string
 }

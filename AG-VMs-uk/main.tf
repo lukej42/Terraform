@@ -32,6 +32,21 @@ module "network" {
   name_prefix          = var.name_prefix
 }
 
+module "appgateway" {
+  source              = "./modules/appgateway"
+
+  agname              = var.agname
+  resource_group_name = var.resource_group_name
+  location            = var.location
+
+  subnet_id           = module.network.appgateway_subnet_id
+  public_ip_id        = module.network.public_ip_id
+
+  agsku               = var.agsku
+  agtier              = var.agtier
+  agcapacity          = var.agcapacity
+}
+
 module "compute" {
   source               = "./modules/compute"
   vmname               = var.vmname
