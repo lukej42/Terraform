@@ -1,5 +1,6 @@
 resource "azurerm_network_interface" "vm_nic" {
-  name                = var.networkinterface_name
+  count               = length(var.vmnames)
+  name                = var.vmnames[count.index] != "" ? var.vmnames[count.index] : "${var.name_prefix}-nic-${count.index}"
   location            = var.location
   resource_group_name = var.resource_group_name
 
@@ -11,13 +12,14 @@ resource "azurerm_network_interface" "vm_nic" {
 }
 
 resource "azurerm_windows_virtual_machine" "vm" {
-  name                  = var.vmname
+  count                 = length(var.vmnames)
+  name                  = var.vmnames[count.index]
   resource_group_name   = var.resource_group_name
   location              = var.location
   size                  = var.vmsize
   admin_username        = var.vmusername
   admin_password        = var.vmpassword
-  network_interface_ids = [azurerm_network_interface.vm_nic.id]
+  network_interface_ids = [azurerm_network_interface.vm_nic[count.index].id]
 
   os_disk {
     caching              = "ReadWrite"

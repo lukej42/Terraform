@@ -15,7 +15,7 @@ resource "azurerm_application_gateway" "network" {
   }
 
   frontend_port {
-    name = "frontend_port_name"
+    name = "frontend-port"
     port = 80
   }
 
@@ -25,31 +25,42 @@ resource "azurerm_application_gateway" "network" {
   }
 
   backend_address_pool {
-    name = "backend-address-pool"
+    name = "backend-pool"
   }
 
   backend_http_settings {
-    name                  = "http_setting_name"
+    name                  = "http-setting"
     cookie_based_affinity = "Disabled"
-    path                  = "/path1/"
     port                  = 80
     protocol              = "Http"
     request_timeout       = 60
   }
 
   http_listener {
-    name                           = "listener_name"
+    name                           = "listener"
     frontend_ip_configuration_name = "frontend-ip-config"
-    frontend_port_name             = "frontend_port_name"
+    frontend_port_name             = "frontend-port"
     protocol                       = "Http"
   }
 
   request_routing_rule {
-    name                       = "request_routing_rule_name"
-    priority                   = 9
+    name                       = "routing-rule"
     rule_type                  = "Basic"
-    http_listener_name         = "listener_name"
-    backend_address_pool_name  = "backend-address-pool"
-    backend_http_settings_name = "http_setting_name"
+    http_listener_name          = "listener"
+    backend_address_pool_name   = "backend-pool"
+    backend_http_settings_name  = "http-setting"
+    priority                   = 1
   }
+}
+
+resource "azurerm_network_interface_backend_address_pool_association" "vm_to_ag" {
+  count = length(var.vm_nic_ids)
+
+  network_interface_id  = var.vm_nic_ids[count.index]
+  ip_configuration_name = "ipconfig1"
+
+  backend_address_pool_id = one([
+    for pool in azurerm_application_gateway.network.backend_address_pool :
+    pool.id if pool.name == "backend-pool"
+  ])
 }

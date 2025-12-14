@@ -20,9 +20,9 @@ resource "azurerm_subnet" "appgateway" {
 }
 
 resource "azurerm_network_security_group" "nsg" {
-  name                    = var.nsgname
-  location                = var.location
-  resource_group_name     = var.resource_group_name
+  name                = var.nsgname
+  location            = var.location
+  resource_group_name = var.resource_group_name
 
   security_rule {
     name                       = "RDP"
@@ -41,12 +41,11 @@ resource "azurerm_public_ip" "vm_pip" {
   name                = "${var.name_prefix}-pip"
   location            = var.location
   resource_group_name = var.resource_group_name
-
   allocation_method   = "Static"
   sku                 = "Standard"
 }
 
 resource "azurerm_subnet_network_security_group_association" "subnet_nsg" {
-    subnet_id                 = azurerm_subnet.network.id
-    network_security_group_id = azurerm_network_security_group.nsg.id
+  subnet_id                 = azurerm_subnet.network.id
+  network_security_group_id = azurerm_network_security_group.nsg.id
 }

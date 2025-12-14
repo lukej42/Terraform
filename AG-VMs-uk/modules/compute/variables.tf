@@ -2,10 +2,6 @@ variable "subnet_id" {
   type = string
 }
 
-variable "public_ip_id" {
-  type = string
-}
-
 variable "location" {
   type = string
 }
@@ -18,8 +14,9 @@ variable "name_prefix" {
   type = string
 }
 
-variable "vmname" {
-  type = string
+variable "vmnames" {
+  type        = list(string)
+  description = "List of VM names"
 }
 
 variable "vmsize" {
@@ -34,6 +31,3 @@ variable "vmpassword" {
   type = string
 }
 
-variable "networkinterface_name" {
-  type = string
-}

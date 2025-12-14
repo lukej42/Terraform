@@ -1,3 +1,7 @@
-output "vm_private_ip" {
-  value = azurerm_network_interface.vm_nic.ip_configuration[0].private_ip_address
+output "vm_nic_ids" {
+  value = [for nic in azurerm_network_interface.vm_nic : nic.id]
+}
+
+output "vm_private_ips" {
+  value = azurerm_network_interface.vm_nic[*].private_ip_address
 }
