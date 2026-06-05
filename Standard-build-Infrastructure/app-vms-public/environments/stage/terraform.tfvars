@@ -1,0 +1,14 @@
+subscription = "<subcription id>"
+location                 = "uksouth"
+resource_group_name      = "terraform-stage"
+vmname = "stage-vm"
+vmsize = "Standard_B1s"
+vmusername = "Username"
+vmpassword = "Password123?!?"
+virtual_network_name = "stage_vn"
+address_space = ["10.0.0.0/16"]
+subnet_name = "stage-subnet"
+subnet_prefix = ["10.0.2.0/24"]
+networkinterface_name = "stage_ni"
+nsgname = "stage_nsg"
+name_prefix = "stage"
