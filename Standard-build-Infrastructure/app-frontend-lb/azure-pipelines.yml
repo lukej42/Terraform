@@ -34,9 +34,6 @@ variables:
 
   workingDirectory: '$(Build.SourcesDirectory)/Standard-build-Infrastructure/app-frontend-lb'
 
-  tfVars: '-var-file=environments/$(envName)/terraform.tfvars'
-  #extraVars: '-var="subscription_id=$(SUB_ID)"'
-
 pool:
   vmImage: $(vmImageName)
 
@@ -60,7 +57,7 @@ stages:
         backendAzureRmResourceGroupName: 'terraform-deploy'
         backendAzureRmStorageAccountName: 'terraformsflg'
         backendAzureRmContainerName: 'app-frontend-lb'
-        backendAzureRmKey: '$(envName).terraform.tfstate' 
+        backendAzureRmKey: '$(envName).terraform.tfstate'
         backendAzureRmUseAzureAd: true
 
     - task: TerraformTask@5
@@ -68,6 +65,7 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'plan'
+        workingDirectory: '$(workingDirectory)'
         commandOptions: '-var-file=environments/$(envName)/terraform.tfvars'
         environmentServiceNameAzureRM: $(azureServiceConnection)
 
@@ -77,7 +75,7 @@ stages:
   condition: succeeded()
   jobs:
   - deployment: Terraform_Apply
-    environment: '$(envName)' 
+    environment: '$(envName)'
     strategy:
       runOnce:
         deploy:
@@ -98,7 +96,7 @@ stages:
               backendAzureRmResourceGroupName: 'terraform-deploy'
               backendAzureRmStorageAccountName: 'terraformsflg'
               backendAzureRmContainerName: 'app-frontend-lb'
-              backendAzureRmKey: '$(envName).terraform.tfstate' 
+              backendAzureRmKey: '$(envName).terraform.tfstate'
               backendAzureRmUseAzureAd: true
           
           - task: TerraformTask@5
@@ -106,5 +104,6 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'apply'
+              workingDirectory: '$(workingDirectory)'
               commandOptions: '-var-file=environments/$(envName)/terraform.tfvars'
               environmentServiceNameAzureRM: $(azureServiceConnection)
