@@ -19,7 +19,7 @@ parameters:
 
 variables:
   vmImageName: 'ubuntu-latest'
-  azureServiceConnection: 'Azure subscription 1(525c7c1f-f5e9-4bf4-8d7a-5b7a06889a12)'
+  azureServiceConnection: 'Subscription'
   
   ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
     envName: 'prod'
