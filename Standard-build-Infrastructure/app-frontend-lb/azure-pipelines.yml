@@ -94,6 +94,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
+              workingDirectory: '$(workingDirectory)'
               backendServiceArm: $(azureServiceConnection)
               backendAzureRmResourceGroupName: 'terraform-deploy'
               backendAzureRmStorageAccountName: 'terraformsflg'
