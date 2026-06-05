@@ -35,7 +35,7 @@ variables:
   workingDirectory: '$(Build.SourcesDirectory)/Standard-build-Infrastructure/app-frontend-lb'
 
   tfVars: '-var-file=environments/$(envName)/terraform.tfvars'
-  extraVars: '-var="subscription_id=$(SUB_ID)"'
+  #extraVars: '-var="subscription_id=$(SUB_ID)"'
 
 pool:
   vmImage: $(vmImageName)
