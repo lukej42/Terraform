@@ -6,6 +6,10 @@ trigger:
       - qa
       - dev
 
+  paths:
+    include:
+      - Standard-build-Infrastructure/app-vms-public/*
+
 parameters:
 - name: environment
   displayName: Target Environment (Manual Override)
