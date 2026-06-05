@@ -68,8 +68,7 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'plan'
-        workingDirectory: '$(workingDirectory)'
-        commandOptions: '$(tfVars) $(extraVars)'
+        commandOptions: '-var-file=environments/$(envName)/terraform.tfvars'
         environmentServiceNameAzureRM: $(azureServiceConnection)
 
 - stage: Apply
@@ -107,6 +106,5 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'apply'
-              workingDirectory: '$(workingDirectory)'
-              commandOptions: '$(tfVars) $(extraVars) -auto-approve'
+              commandOptions: '-var-file=environments/$(envName)/terraform.tfvars'
               environmentServiceNameAzureRM: $(azureServiceConnection)
