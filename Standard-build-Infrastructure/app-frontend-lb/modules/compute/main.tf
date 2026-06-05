@@ -4,7 +4,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   location            = var.location
   size                = var.vm-size
   admin_username      = "username"
-  admin_password      = "password"
+  admin_password      = "password123?!?"
   network_interface_ids = [var.network_interface_id]
 
   os_disk {
