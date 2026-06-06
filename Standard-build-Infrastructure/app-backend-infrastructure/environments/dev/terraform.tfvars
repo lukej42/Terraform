@@ -1,6 +1,6 @@
 subscription = "525c7c1f-f5e9-4bf4-8d7a-5b7a06889a12"
-tenant_id = "<tenant id>"
-spobject_id = "<service principal id>"
+tenant_id = "b38a3c51-d056-4b51-90d0-6027238fb894"
+spobject_id = "9eff0106-1843-4b69-b6cb-5ebe87917d2d"
 storage_account_name     = "devstorageacct1992"
 location                 = "uksouth"
 resource_group_name      = "terraform-dev"
