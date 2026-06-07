@@ -60,7 +60,7 @@ stages:
         backendServiceArm: $(azureServiceConnection)
         backendAzureRmResourceGroupName: 'terraform-deploy'
         backendAzureRmStorageAccountName: 'terraformsflg'
-        backendAzureRmContainerName: 'AG-VMs-uk'
+        backendAzureRmContainerName: 'ag-vms-uk'
         backendAzureRmKey: '$(envName).terraform.tfstate'
         backendAzureRmUseAzureAd: true
 
@@ -99,7 +99,7 @@ stages:
               backendServiceArm: $(azureServiceConnection)
               backendAzureRmResourceGroupName: 'terraform-deploy'
               backendAzureRmStorageAccountName: 'terraformsflg'
-              backendAzureRmContainerName: 'AG-VMs-uk'
+              backendAzureRmContainerName: 'ag-vms-uk'
               backendAzureRmKey: '$(envName).terraform.tfstate'
               backendAzureRmUseAzureAd: true
           
