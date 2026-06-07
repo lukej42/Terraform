@@ -1,10 +1,10 @@
-subscription = "<subcription id>"
+subscription = "525c7c1f-f5e9-4bf4-8d7a-5b7a06889a12"
 location                 = "uksouth"
 resource_group_name      = "terraform-dev"
 vmname = "dev-vm"
 vmsize = "Standard_B1s"
-vmusername = "<vm username>"
-vmpassword = "<vm password>"
+vmusername = "Username"
+vmpassword = "Password123?!?"
 virtual_network_name = "dev_vn"
 address_space = ["10.0.0.0/16"]
 subnet_name = "dev-subnet"
