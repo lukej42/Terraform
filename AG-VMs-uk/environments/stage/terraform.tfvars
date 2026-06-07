@@ -12,3 +12,7 @@ subnet_prefix = ["10.0.2.0/24"]
 networkinterface_name = "stage_ni"
 nsgname = "stage_nsg"
 name_prefix = "stage"
+agcapacity = "2"
+agname = "stage-ag"
+agsku = "Standard_v2"
+agtier = "Standard_v2"

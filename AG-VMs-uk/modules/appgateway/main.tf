@@ -25,20 +25,17 @@ resource "azurerm_application_gateway" "this" {
   }
 
   backend_address_pool {
-    name = "backend-pool"
-
-    dynamic "backend_addresses" {
-      for_each = var.backend_private_ips
-      content {
-        ip_address = backend_addresses.value
-      }
-    }
+    name         = "backend-pool"
+    # FIX: Replaced the dynamic block with the correct argument
+    ip_addresses = var.backend_private_ips
   }
 
   backend_http_settings {
-    name     = "http-settings"
-    port     = 80
-    protocol = "Http"
+    name                  = "http-settings"
+    port                  = 80
+    protocol              = "Http"
+    # FIX: Added the mandatory required argument
+    cookie_based_affinity = "Disabled" 
   }
 
   http_listener {
