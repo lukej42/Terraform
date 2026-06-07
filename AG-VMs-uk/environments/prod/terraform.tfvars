@@ -1,0 +1,14 @@
+subscription = "525c7c1f-f5e9-4bf4-8d7a-5b7a06889a12"
+location                 = "uksouth"
+resource_group_name      = "terraform-prod"
+vmname = "dev-vm"
+vmsize = "Standard_B1s"
+vmusername = "Username"
+vmpassword = "Password123?!?"
+virtual_network_name = "prod_vn"
+address_space = ["10.0.0.0/16"]
+subnet_name = "prod-subnet"
+subnet_prefix = ["10.0.2.0/24"]
+networkinterface_name = "prod_ni"
+nsgname = "prod_nsg"
+name_prefix = "prod"
