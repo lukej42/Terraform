@@ -12,3 +12,4 @@ subnet_prefix = ["10.0.2.0/24"]
 networkinterface_name = "prod_ni"
 nsgname = "prod_nsg"
 name_prefix = "prod"
+agcapacity = "2"
