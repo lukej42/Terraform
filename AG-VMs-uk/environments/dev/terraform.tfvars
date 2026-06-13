@@ -12,3 +12,7 @@ subnet_prefix = ["10.0.2.0/24"]
 networkinterface_name = "dev_ni"
 nsgname = "dev_nsg"
 name_prefix = "dev"
+agname = "dev-ag"
+agsku = "Standard_v2"
+agtier = "Standard_v2"
+agcapacity = "2"
