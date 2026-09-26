@@ -22,21 +22,25 @@ parameters:
   - prod
 
 variables:
-  vmImageName: 'ubuntu-latest'
-  azureServiceConnection: 'Subscription'
-  
-  ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
-    envName: 'prod'
-  ${{ if eq(variables['Build.SourceBranchName'], 'stage') }}:
-    envName: 'stage'
-  ${{ if eq(variables['Build.SourceBranchName'], 'qa') }}:
-    envName: 'qa'
-  ${{ if eq(variables['Build.SourceBranchName'], 'dev') }}:
-    envName: 'dev'
-  ${{ if not(in(variables['Build.SourceBranchName'], 'main', 'stage', 'qa', 'dev')) }}:
-    envName: ${{ parameters.environment }}
+  - group: Subscription
 
-  workingDirectory: '$(Build.SourcesDirectory)/AKS-build'
+  - name: vmImageName
+    value: 'ubuntu-latest'
+
+  - name: envName
+    ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+      value: 'prod'
+    ${{ if eq(variables['Build.SourceBranchName'], 'stage') }}:
+      value: 'stage'
+    ${{ if eq(variables['Build.SourceBranchName'], 'qa') }}:
+      value: 'qa'
+    ${{ if eq(variables['Build.SourceBranchName'], 'dev') }}:
+      value: 'dev'
+    ${{ if not(in(variables['Build.SourceBranchName'], 'main', 'stage', 'qa', 'dev')) }}:
+      value: ${{ parameters.environment }}
+
+  - name: workingDirectory
+    value: '$(Build.SourcesDirectory)/AKS-build'
 
 pool:
   vmImage: $(vmImageName)
@@ -57,12 +61,11 @@ stages:
         provider: 'azurerm'
         command: 'init'
         workingDirectory: '$(workingDirectory)'
-        backendServiceArm: $(azureServiceConnection)
+        backendServiceArm: 'Subscription'
         backendAzureRmResourceGroupName: 'terraform-deploy'
         backendAzureRmStorageAccountName: 'terraformsflg'
         backendAzureRmContainerName: 'aks-build'
         backendAzureRmKey: '$(envName).terraform.tfstate'
-        backendAzureRmUseAzureAd: true
 
     - task: TerraformTask@5
       displayName: 'Plan'
@@ -71,7 +74,7 @@ stages:
         command: 'plan'
         workingDirectory: '$(workingDirectory)'
         commandOptions: '-var-file=environments/$(envName)/terraform.tfvars'
-        environmentServiceNameAzureRM: $(azureServiceConnection)
+        environmentServiceNameAzureRM: 'Subscription'
 
 - stage: Apply
   displayName: Apply - $(envName)
@@ -96,12 +99,11 @@ stages:
               provider: 'azurerm'
               command: 'init'
               workingDirectory: '$(workingDirectory)'
-              backendServiceArm: $(azureServiceConnection)
+              backendServiceArm: 'Subscription'
               backendAzureRmResourceGroupName: 'terraform-deploy'
               backendAzureRmStorageAccountName: 'terraformsflg'
               backendAzureRmContainerName: 'aks-build'
               backendAzureRmKey: '$(envName).terraform.tfstate'
-              backendAzureRmUseAzureAd: true
           
           - task: TerraformTask@5
             displayName: 'Apply'
@@ -110,4 +112,4 @@ stages:
               command: 'apply'
               workingDirectory: '$(workingDirectory)'
               commandOptions: '-var-file=environments/$(envName)/terraform.tfvars'
-              environmentServiceNameAzureRM: $(azureServiceConnection)
+              environmentServiceNameAzureRM: 'Subscription'
