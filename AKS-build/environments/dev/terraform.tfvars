@@ -1,4 +1,4 @@
-subscription_id = "<subscription id>"
+subscription_id = "525c7c1f-f5e9-4bf4-8d7a-5b7a06889a12"
 tenant_id = "<tenant id>"
 spobject_id = "<spobject id>"
 storage_account_name     = "devstorageacct1992"
